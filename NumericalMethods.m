@@ -1,4 +1,7 @@
 function NumericalMethods()
+% MATLAB Numerical Methods GUI
+% Implements Root Finding Methods and Matrix Operations
+% Similar functionality to main1.py
 
 clc;
 clear;
