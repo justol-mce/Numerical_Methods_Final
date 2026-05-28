@@ -24,9 +24,13 @@ mainGrid = uigridlayout(fig,[1 1]);
 %% =========================================================
 
 tg = uitabgroup(mainGrid);
+tg.BackgroundColor = [0.08 0.1 0.15];
 
 rootTab = uitab(tg,'Title','Root Finding');
+rootTab.BackgroundColor = [0.08 0.1 0.15];
+
 matrixTab = uitab(tg,'Title','Matrix');
+matrixTab.BackgroundColor = [0.08 0.1 0.15];
 
 %% =========================================================
 % ROOT TAB GRID
@@ -53,6 +57,7 @@ controlPanel = uipanel(rootGrid,...
 
 controlPanel.Layout.Row = 1;
 controlPanel.Layout.Column = [1 2];
+controlPanel.BorderType = 'none';
 
 controlGrid = uigridlayout(controlPanel,[4 6]);
 
@@ -79,7 +84,7 @@ eqDropdown = uidropdown(controlGrid,'Items',{
     'cos(x) - x'
     'log(x) - 1'
     'sqrt(x) - 2'
-    'Custom'},'FontSize',13);
+    'Custom'},'FontSize',13,'BackgroundColor',[0.15 0.18 0.25],'FontColor','white');
 
 eqDropdown.Layout.Row = 1;
 eqDropdown.Layout.Column = 2;
@@ -91,7 +96,7 @@ eqDropdown.Layout.Column = 2;
 lbl2 = uilabel(controlGrid,'Text','Custom Eq','FontColor','white','FontWeight','bold','FontSize',14);
 lbl2.Layout.Row = 1; lbl2.Layout.Column = 3;
 
-eqField = uieditfield(controlGrid,'text','Value','x^2 - 4','Editable','off','FontSize',13);
+eqField = uieditfield(controlGrid,'text','Value','x^2 - 4','Editable','off','FontSize',13,'BackgroundColor',[0.15 0.18 0.25],'FontColor','white');
 eqField.Layout.Row = 1; eqField.Layout.Column = 4;
 
 %% =========================================================
@@ -106,32 +111,45 @@ methodDropdown = uidropdown(controlGrid,'Items',{
     'Bisection'
     'Regula Falsi'
     'Newton Raphson'
-    'Secant'},'FontSize',13);
+    'Secant'},'FontSize',13,'BackgroundColor',[0.15 0.18 0.25],'FontColor','white');
 
 methodDropdown.Layout.Row = 2;
 methodDropdown.Layout.Column = 2;
 
 %% =========================================================
+% XL / XU / TOL LABELS
+%% =========================================================
+
+lbl_xl = uilabel(controlGrid,'Text','XL','FontColor','white','FontWeight','bold','FontSize',12);
+lbl_xl.Layout.Row = 3; lbl_xl.Layout.Column = 1;
+
+lbl_xu = uilabel(controlGrid,'Text','XU','FontColor','white','FontWeight','bold','FontSize',12);
+lbl_xu.Layout.Row = 3; lbl_xu.Layout.Column = 3;
+
+lbl_tol = uilabel(controlGrid,'Text','Tolerance','FontColor','white','FontWeight','bold','FontSize',12);
+lbl_tol.Layout.Row = 4; lbl_tol.Layout.Column = 1;
+
+%% =========================================================
 % XL / XU / TOL
 %% =========================================================
 
-xlField = uieditfield(controlGrid,'numeric','Value',-10);
+xlField = uieditfield(controlGrid,'numeric','Value',-10,'BackgroundColor',[0.15 0.18 0.25],'FontColor','white');
 xlField.Layout.Row = 3; xlField.Layout.Column = 2;
 
-xuField = uieditfield(controlGrid,'numeric','Value',10);
+xuField = uieditfield(controlGrid,'numeric','Value',10,'BackgroundColor',[0.15 0.18 0.25],'FontColor','white');
 xuField.Layout.Row = 3; xuField.Layout.Column = 4;
 
-tolField = uieditfield(controlGrid,'numeric','Value',0.0001);
+tolField = uieditfield(controlGrid,'numeric','Value',0.0001,'BackgroundColor',[0.15 0.18 0.25],'FontColor','white');
 tolField.Layout.Row = 4; tolField.Layout.Column = 2;
 
 %% =========================================================
 % BUTTONS
 %% =========================================================
 
-solveBtn = uibutton(controlGrid,'push','Text','SOLVE','BackgroundColor',[0 0.6 1],'FontColor','white');
+solveBtn = uibutton(controlGrid,'push','Text','SOLVE','BackgroundColor',[0 0.7 1],'FontColor','white','FontWeight','bold','FontSize',12);
 solveBtn.Layout.Row = 4; solveBtn.Layout.Column = 3;
 
-clearBtn = uibutton(controlGrid,'push','Text','CLEAR','BackgroundColor',[0.9 0.2 0.2],'FontColor','white');
+clearBtn = uibutton(controlGrid,'push','Text','CLEAR','BackgroundColor',[1 0.3 0.3],'FontColor','white','FontWeight','bold','FontSize',12);
 clearBtn.Layout.Row = 4; clearBtn.Layout.Column = 4;
 
 %% =========================================================
@@ -140,12 +158,14 @@ clearBtn.Layout.Row = 4; clearBtn.Layout.Column = 4;
 
 tablePanel = uipanel(rootGrid,'Title','Iterations','FontWeight','bold','ForegroundColor','white','BackgroundColor',[0.12 0.14 0.2]);
 tablePanel.Layout.Row = 2; tablePanel.Layout.Column = 1;
+tablePanel.BorderType = 'none';
 
 tableGrid = uigridlayout(tablePanel,[1 1]);
 
 columns = {'i','XL','XR','XU','f(XL)','f(XR)','Error %'};
 
-resultTable = uitable(tableGrid,'ColumnName',columns,'FontSize',11,'RowStriping','on');
+resultTable = uitable(tableGrid,'ColumnName',columns,'FontSize',11,'RowStriping','on','BackgroundColor',[0.15 0.18 0.25]);
+resultTable.FontColor = 'white';
 
 %% =========================================================
 % GRAPH
@@ -153,11 +173,22 @@ resultTable = uitable(tableGrid,'ColumnName',columns,'FontSize',11,'RowStriping'
 
 graphPanel = uipanel(rootGrid,'Title','Graph Visualization','FontWeight','bold','ForegroundColor','white','BackgroundColor',[0.12 0.14 0.2]);
 graphPanel.Layout.Row = 2; graphPanel.Layout.Column = 2;
+graphPanel.BorderType = 'none';
 
 graphGrid = uigridlayout(graphPanel,[1 1]);
 ax = uiaxes(graphGrid);
+ax.Color = [0.05 0.07 0.12];
+ax.GridColor = [0.2 0.22 0.28];
+ax.XColor = [0.7 0.7 0.7];
+ax.YColor = [0.7 0.7 0.7];
+ax.TitleFontSizeMultiplier = 1.2;
+ax.Title.Color = 'white';
+ax.XLabel.Color = 'white';
+ax.YLabel.Color = 'white';
+
 grid(ax,'on');
-ax.Color = [0.95 0.97 1];
+ax.GridAlpha = 0.2;
+hold(ax,'on');
 
 %% =========================================================
 % MATRIX TAB
@@ -166,6 +197,9 @@ ax.Color = [0.95 0.97 1];
 matrixGrid = uigridlayout(matrixTab,[2 3]);
 matrixGrid.RowHeight = {160,'1x'};
 matrixGrid.ColumnWidth = {'1x','1x','1.2x'};
+matrixGrid.Padding = [10 10 10 10];
+matrixGrid.RowSpacing = 10;
+matrixGrid.ColumnSpacing = 10;
 
 %% =========================================================
 % MATRIX CONTROL PANEL
@@ -174,19 +208,20 @@ matrixGrid.ColumnWidth = {'1x','1x','1.2x'};
 matrixControlPanel = uipanel(matrixGrid,'Title','Matrix Operations','FontWeight','bold','FontSize',15,'ForegroundColor','white','BackgroundColor',[0.12 0.14 0.2]);
 matrixControlPanel.Layout.Row = 1;
 matrixControlPanel.Layout.Column = [1 3];
+matrixControlPanel.BorderType = 'none';
 
 %% =========================================================
 % CONTROL GRID (FIXED)
 %% =========================================================
 
-matrixControlGrid = uigridlayout(matrixControlPanel,[2 6]); % FIXED (was 2x5)
+matrixControlGrid = uigridlayout(matrixControlPanel,[2 6]);
 
 matrixControlGrid.RowHeight = {30 35};
 matrixControlGrid.Padding = [10 10 10 10];
 matrixControlGrid.RowSpacing = 8;
 matrixControlGrid.ColumnSpacing = 10;
 
-matrixControlGrid.ColumnWidth = {140,240,170,170,140,140}; % FIXED
+matrixControlGrid.ColumnWidth = {140,240,170,170,140,140};
 
 %% =========================================================
 % OPERATION
@@ -196,7 +231,7 @@ matrixLabel = uilabel(matrixControlGrid,'Text','Operation','FontColor','white','
 matrixLabel.Layout.Row = 1; matrixLabel.Layout.Column = 1;
 
 matrixDropdown = uidropdown(matrixControlGrid,'Items',{
-    'Addition','Multiplication','Transpose','Determinant','Inverse','Adjoint','Power','Equation'},'FontSize',14);
+    'Addition','Multiplication','Transpose','Determinant','Inverse','Adjoint','Power','Equation'},'FontSize',14,'BackgroundColor',[0.15 0.18 0.25],'FontColor','white');
 
 matrixDropdown.Layout.Row = 1;
 matrixDropdown.Layout.Column = 2;
@@ -208,7 +243,7 @@ matrixDropdown.Layout.Column = 2;
 powerLabel = uilabel(matrixControlGrid,'Text','Power','FontColor','white','FontWeight','bold','FontSize',14);
 powerLabel.Layout.Row = 1; powerLabel.Layout.Column = 5;
 
-powerDropdown = uidropdown(matrixControlGrid,'Items',{'2','3','4','5','6','7','8','9','10'},'Value','2','Enable','off','FontSize',14);
+powerDropdown = uidropdown(matrixControlGrid,'Items',{'2','3','4','5','6','7','8','9','10'},'Value','2','Enable','off','FontSize',14,'BackgroundColor',[0.15 0.18 0.25],'FontColor','white');
 powerDropdown.Layout.Row = 1;
 powerDropdown.Layout.Column = 6;
 
@@ -216,33 +251,36 @@ powerDropdown.Layout.Column = 6;
 % BUTTONS
 %% =========================================================
 
-computeBtn = uibutton(matrixControlGrid,'push','Text','COMPUTE','BackgroundColor',[0 0.65 1],'FontColor','white');
+computeBtn = uibutton(matrixControlGrid,'push','Text','COMPUTE','BackgroundColor',[0 0.7 1],'FontColor','white','FontWeight','bold','FontSize',12);
 computeBtn.Layout.Row = 2; computeBtn.Layout.Column = 4;
 
-clearMatrixBtn = uibutton(matrixControlGrid,'push','Text','CLEAR','BackgroundColor',[0.9 0.2 0.2],'FontColor','white');
+clearMatrixBtn = uibutton(matrixControlGrid,'push','Text','CLEAR','BackgroundColor',[1 0.3 0.3],'FontColor','white','FontWeight','bold','FontSize',12);
 clearMatrixBtn.Layout.Row = 2; clearMatrixBtn.Layout.Column = 5;
 
 %% =========================================================
-% MATRIX A / B / RESULT (UNCHANGED)
+% MATRIX A / B / RESULT
 %% =========================================================
 
-matrixAPanel = uipanel(matrixGrid,'Title','Matrix A');
+matrixAPanel = uipanel(matrixGrid,'Title','Matrix A','ForegroundColor','white','BackgroundColor',[0.12 0.14 0.2]);
 matrixAPanel.Layout.Row = 2; matrixAPanel.Layout.Column = 1;
+matrixAPanel.BorderType = 'none';
 matrixAGrid = uigridlayout(matrixAPanel,[1 1]);
-matrixA = uitextarea(matrixAGrid,'Value',{'1 2';'3 4'});
+matrixA = uitextarea(matrixAGrid,'Value',{'1 2';'3 4'},'BackgroundColor',[0.15 0.18 0.25],'FontColor','white');
 
-matrixBPanel = uipanel(matrixGrid,'Title','Matrix B');
+matrixBPanel = uipanel(matrixGrid,'Title','Matrix B','ForegroundColor','white','BackgroundColor',[0.12 0.14 0.2]);
 matrixBPanel.Layout.Row = 2; matrixBPanel.Layout.Column = 2;
+matrixBPanel.BorderType = 'none';
 matrixBGrid = uigridlayout(matrixBPanel,[1 1]);
-matrixB = uitextarea(matrixBGrid,'Value',{'5 6';'7 8'});
+matrixB = uitextarea(matrixBGrid,'Value',{'5 6';'7 8'},'BackgroundColor',[0.15 0.18 0.25],'FontColor','white');
 
-matrixResultPanel = uipanel(matrixGrid,'Title','Result');
+matrixResultPanel = uipanel(matrixGrid,'Title','Result','ForegroundColor','white','BackgroundColor',[0.12 0.14 0.2]);
 matrixResultPanel.Layout.Row = 2; matrixResultPanel.Layout.Column = 3;
+matrixResultPanel.BorderType = 'none';
 matrixResultGrid = uigridlayout(matrixResultPanel,[1 1]);
-matrixResult = uitextarea(matrixResultGrid,'Editable','off');
+matrixResult = uitextarea(matrixResultGrid,'Editable','off','BackgroundColor',[0.15 0.18 0.25],'FontColor','white');
 
 %% =========================================================
-% CALLBACK FIX (UNCHANGED LOGIC)
+% CALLBACK
 %% =========================================================
 
 eqDropdown.ValueChangedFcn = @(src,event) toggleCustom();
@@ -254,6 +292,7 @@ clearMatrixBtn.ButtonPushedFcn = @(btn,event) clearMatrix();
 matrixDropdown.ValueChangedFcn = @(src,event) togglePower();
 
 togglePower();
+
 %% =========================================================
 % FUNCTIONS
 %% =========================================================
@@ -319,13 +358,22 @@ try
 
     method = methodDropdown.Value;
 
-    x = linspace(xl,xu,2000);
-    y = arrayfun(f,x);
+    % Plot the function
+    x = linspace(xl, xu, 2000);
+    y = arrayfun(f, x);
 
-    plot(ax,x,y,'LineWidth',3,'Color',[0 0.45 0.74]);
-    xline(ax,0,'k--');
-    yline(ax,0,'k--');
-    grid(ax,'on');
+    % Main function plot with gradient effect
+    plot(ax, x, y, 'LineWidth', 3, 'Color', [0 0.6 1], 'DisplayName', 'f(x)');
+    
+    % Reference lines
+    xline(ax, 0, '--', 'Color', [0.5 0.5 0.5], 'LineWidth', 1, 'Alpha', 0.5);
+    yline(ax, 0, '--', 'Color', [0.5 0.5 0.5], 'LineWidth', 1, 'Alpha', 0.5);
+    
+    grid(ax, 'on');
+    ax.GridAlpha = 0.2;
+    ax.Title.String = ['Function: ' expr];
+    ax.XLabel.String = 'x';
+    ax.YLabel.String = 'f(x)';
 
     resultData = {};
 
@@ -348,13 +396,13 @@ try
                 f1 = f(x1);
                 f2 = f(x2);
 
-                resultData(end+1,:) = {i,x1,x1,x2,f1,f2,NaN};
+                resultData(end+1,:) = {i, x1, x1, x2, f1, f2, NaN};
 
-                plot(ax,[x1 x2],[f1 f2],'b.-')
+                plot(ax, [x1 x2], [f1 f2], 'b.-', 'LineWidth', 1.5, 'MarkerSize', 4)
 
                 if f1*f2 < 0
 
-                    % refine using bisection inside the bracket
+                    % Refine using bisection inside the bracket
                     a = x1;
                     b = x2;
 
@@ -376,18 +424,17 @@ try
 
                     foundRoot = true;
 
-                    scatter(ax,xr,0,120,'red','filled');
+                    scatter(ax, xr, 0, 150, 'red', 'filled', 'DisplayName', sprintf('Root: %.6f', xr));
 
-                    text(ax,xr,0,...
-                        [' Root ~ ' num2str(xr,'%.6f')],...
-                        'Color','red','FontWeight','bold');
+                    text(ax, xr, max(y)*0.1, sprintf(' Root ~ %.6f', xr), ...
+                        'Color', 'red', 'FontWeight', 'bold', 'FontSize', 11);
 
                     break;
                 end
             end
 
             if ~foundRoot
-                uialert(fig,'No root found in interval','Incremental Method');
+                uialert(fig, 'No root found in interval', 'Incremental Method');
             end
 
         case 'Bisection'
@@ -407,9 +454,9 @@ try
                     ea = abs((xr - xr_old)/xr)*100;
                 end
 
-                resultData(end+1,:) = {i,xl,xr,xu,fxl,fxr,ea};
+                resultData(end+1,:) = {i, xl, xr, xu, fxl, fxr, ea};
 
-                scatter(ax,xr,0,80,'red','filled');
+                scatter(ax, xr, 0, 80, 'red', 'filled', 'Alpha', 0.6);
 
                 if fxl * fxr < 0
                     xu = xr;
@@ -437,9 +484,9 @@ try
 
                 ea = abs((xr-xr_old)/xr)*100;
 
-                resultData(end+1,:) = {i,xl,xr,xu,fxl,fxr,ea};
+                resultData(end+1,:) = {i, xl, xr, xu, fxl, fxr, ea};
 
-                scatter(ax,xr,0,80,'g','filled');
+                scatter(ax, xr, 0, 80, 'g', 'filled', 'Alpha', 0.6);
 
                 if fxl*fxr < 0
                     xu = xr;
@@ -472,9 +519,9 @@ try
 
                 ea = abs((x1-x0)/x1)*100;
 
-                resultData(end+1,:) = {i,x0,x1,'-',fx,f(x1),ea};
+                resultData(end+1,:) = {i, x0, x1, '-', fx, f(x1), ea};
 
-                scatter(ax,x1,0,80,'m','filled');
+                scatter(ax, x1, 0, 80, 'm', 'filled', 'Alpha', 0.6);
 
                 if abs(f(x1)) < tol || ea < tol*100
                     xr = x1;
@@ -498,9 +545,9 @@ try
 
                 ea = abs((x2-x1)/x2)*100;
 
-                resultData(end+1,:) = {i,x0,x1,x2,fx0,fx1,ea};
+                resultData(end+1,:) = {i, x0, x1, x2, fx0, fx1, ea};
 
-                scatter(ax,x2,0,80,'c','filled');
+                scatter(ax, x2, 0, 80, 'c', 'filled', 'Alpha', 0.6);
 
                 if abs(f(x2)) < tol || ea < tol*100
                     xr = x2;
@@ -516,13 +563,16 @@ try
     resultTable.Data = resultData;
 
     if ~isnan(xr)
-        scatter(ax,xr,0,200,'red','filled');
-        text(ax,xr,0,[' Root = ' num2str(xr,'%.6f')], ...
-            'Color','red','FontWeight','bold');
+        scatter(ax, xr, 0, 200, 'red', 'filled', 'DisplayName', sprintf('Final Root: %.6f', xr));
+        text(ax, xr, max(y)*0.05, sprintf(' Root = %.6f', xr), ...
+            'Color', 'red', 'FontWeight', 'bold', 'FontSize', 12, ...
+            'BackgroundColor', [0.15 0.18 0.25], 'EdgeColor', 'red');
     end
 
+    legend(ax, 'Location', 'best', 'TextColor', 'white', 'EdgeColor', [0.3 0.3 0.3]);
+
 catch ME
-    uialert(fig,ME.message,'Error');
+    uialert(fig, ME.message, 'Error');
 end
 
 end
@@ -586,7 +636,7 @@ function computeMatrix()
 
     catch ME
 
-        uialert(fig,ME.message,'Matrix Error');
+        uialert(fig, ME.message, 'Matrix Error');
 
     end
 
@@ -598,7 +648,7 @@ end
 
 function A = parseMatrix(cellText)
 
-    txt = strjoin(cellText,newline);
+    txt = strjoin(cellText, newline);
 
     rows = splitlines(txt);
 
@@ -621,7 +671,11 @@ function clearTable()
     resultTable.Data = {};
 
     cla(ax);
-    hold(ax,'on');
+    hold(ax, 'on');
+    
+    ax.Title.String = '';
+    ax.XLabel.String = 'x';
+    ax.YLabel.String = 'f(x)';
 
 end
 
@@ -644,7 +698,7 @@ end
 
     op = matrixDropdown.Value;
 
-    if strcmp(op,'Power')
+    if strcmp(op, 'Power')
         powerDropdown.Enable = 'on';
     else
         powerDropdown.Enable = 'off';
