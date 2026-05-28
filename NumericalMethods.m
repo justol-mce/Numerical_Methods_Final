@@ -179,14 +179,14 @@ matrixControlPanel.Layout.Column = [1 3];
 % CONTROL GRID (FIXED)
 %% =========================================================
 
-matrixControlGrid = uigridlayout(matrixControlPanel,[2 6]); % ✅ FIXED (was 2x5)
+matrixControlGrid = uigridlayout(matrixControlPanel,[2 6]); % FIXED (was 2x5)
 
 matrixControlGrid.RowHeight = {30 35};
 matrixControlGrid.Padding = [10 10 10 10];
 matrixControlGrid.RowSpacing = 8;
 matrixControlGrid.ColumnSpacing = 10;
 
-matrixControlGrid.ColumnWidth = {140,240,170,170,140,140}; % ✅ FIXED
+matrixControlGrid.ColumnWidth = {140,240,170,170,140,140}; % FIXED
 
 %% =========================================================
 % OPERATION
@@ -278,10 +278,10 @@ function expr = getEquation()
         expr = eqDropdown.Value;
     end
 
-    % REMOVE DOUBLE CONVERSION BUG FIRST
+    % Convert to string format
     expr = char(expr);
 
-    % ONLY FIX IF NOT ALREADY SAFE
+    % Apply element-wise operations for proper function evaluation
     expr = strrep(expr,'^','.^');
     expr = strrep(expr,'*','.*');
     expr = strrep(expr,'/','./');
@@ -354,36 +354,36 @@ try
 
                 if f1*f2 < 0
 
-    % refine using bisection inside the bracket
-    a = x1;
-    b = x2;
+                    % refine using bisection inside the bracket
+                    a = x1;
+                    b = x2;
 
-    for j = 1:50
-        xr = (a + b)/2;
+                    for j = 1:50
+                        xr = (a + b)/2;
 
-        fr = f(xr);
+                        fr = f(xr);
 
-        if abs(fr) < tol
-            break;
-        end
+                        if abs(fr) < tol
+                            break;
+                        end
 
-        if f(a)*fr < 0
-            b = xr;
-        else
-            a = xr;
-        end
-    end
+                        if f(a)*fr < 0
+                            b = xr;
+                        else
+                            a = xr;
+                        end
+                    end
 
-    foundRoot = true;
+                    foundRoot = true;
 
-    scatter(ax,xr,0,120,'red','filled');
+                    scatter(ax,xr,0,120,'red','filled');
 
-    text(ax,xr,0,...
-        [' Root ~ ' num2str(xr,'%.6f')],...
-        'Color','red','FontWeight','bold');
+                    text(ax,xr,0,...
+                        [' Root ~ ' num2str(xr,'%.6f')],...
+                        'Color','red','FontWeight','bold');
 
-    break;
-end
+                    break;
+                end
             end
 
             if ~foundRoot
@@ -653,4 +653,3 @@ end
 end
 
 end
-    
