@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <AssemblyName>BusTicketingSystem</AssemblyName>
+    <RootNamespace>BusTicketingSystem</RootNamespace>
+    <Version>1.0.0</Version>
+    <Description>Bus Ticketing System Library - MVC Architecture with Receipt Printing</Description>
+    <Authors>Bus Ticketing System Team</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- No external dependencies required for this library -->
+  </ItemGroup>
+
+</Project>
